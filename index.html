@@ -1,0 +1,472 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GoldHawk — Account Setup</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background: #f5f5f0;
+      color: #1a1a1a;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container {
+      max-width: 560px;
+      margin: 0 auto;
+    }
+
+    .header {
+      margin-bottom: 2rem;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      font-weight: 600;
+      letter-spacing: -0.3px;
+      margin-bottom: 6px;
+    }
+
+    .header p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .warning-box {
+      background: #fffbeb;
+      border: 1px solid #f0c040;
+      border-radius: 10px;
+      padding: 12px 16px;
+      font-size: 13.5px;
+      color: #7a5c00;
+      margin-bottom: 1.5rem;
+      line-height: 1.5;
+    }
+
+    .warning-box strong {
+      display: block;
+      margin-bottom: 2px;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 1px solid #e5e5e0;
+      border-radius: 14px;
+      padding: 1.5rem;
+      margin-bottom: 1rem;
+    }
+
+    .section-title {
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: #888;
+      margin-bottom: 1.25rem;
+    }
+
+    .field {
+      margin-bottom: 1.1rem;
+    }
+
+    .field:last-child {
+      margin-bottom: 0;
+    }
+
+    label {
+      display: block;
+      font-size: 13.5px;
+      font-weight: 500;
+      color: #333;
+      margin-bottom: 6px;
+    }
+
+    label .note {
+      font-weight: 400;
+      color: #999;
+      font-size: 12px;
+    }
+
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="number"],
+    select,
+    textarea {
+      width: 100%;
+      padding: 10px 13px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 14px;
+      font-family: inherit;
+      color: #1a1a1a;
+      background: #fff;
+      outline: none;
+      transition: border-color 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: #555;
+    }
+
+    input::placeholder, textarea::placeholder {
+      color: #bbb;
+    }
+
+    select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 12px center;
+      padding-right: 36px;
+    }
+
+    .field-note {
+      font-size: 12px;
+      color: #999;
+      margin-top: 5px;
+      line-height: 1.4;
+    }
+
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+    }
+
+    .ack-card {
+      background: #fafaf8;
+    }
+
+    .ack-row {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .ack-row input[type="checkbox"] {
+      width: 17px;
+      height: 17px;
+      flex-shrink: 0;
+      margin-top: 2px;
+      accent-color: #1a1a1a;
+      cursor: pointer;
+    }
+
+    .ack-text {
+      font-size: 13.5px;
+      color: #555;
+      line-height: 1.6;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 13px;
+      background: #1a1a1a;
+      color: #fff;
+      border: none;
+      border-radius: 10px;
+      font-size: 15px;
+      font-weight: 500;
+      font-family: inherit;
+      cursor: pointer;
+      margin-top: 0.5rem;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .submit-btn:hover { background: #333; }
+    .submit-btn:active { transform: scale(0.99); }
+    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
+
+    .footer-note {
+      text-align: center;
+      font-size: 12px;
+      color: #aaa;
+      margin-top: 1.5rem;
+      line-height: 1.6;
+    }
+
+    /* Success screen */
+    .success-screen {
+      display: none;
+      text-align: center;
+      padding: 3rem 1rem;
+    }
+
+    .success-icon {
+      width: 56px;
+      height: 56px;
+      background: #f0faf4;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+    }
+
+    .success-screen h2 {
+      font-size: 22px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+
+    .success-screen p {
+      font-size: 15px;
+      color: #555;
+      line-height: 1.7;
+      max-width: 400px;
+      margin: 0 auto;
+    }
+
+    .error-msg {
+      color: #c0392b;
+      font-size: 13px;
+      margin-top: 5px;
+      display: none;
+    }
+
+    .submitting-msg {
+      text-align: center;
+      font-size: 14px;
+      color: #666;
+      margin-top: 10px;
+      display: none;
+    }
+
+    @media (max-width: 480px) {
+      .two-col { grid-template-columns: 1fr; }
+      body { padding: 1rem 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- Form -->
+  <div id="form-section">
+    <div class="header">
+      <h1>GoldHawk — account setup</h1>
+      <p>Fill in your details below. We will contact you privately to complete the setup securely.</p>
+    </div>
+
+    <div class="warning-box">
+      <strong>Do not enter your MT5 password here.</strong>
+      Our team will contact you privately via WhatsApp to collect it securely.
+    </div>
+
+    <form id="onboarding-form" novalidate>
+
+      <!-- Personal details -->
+      <div class="card">
+        <p class="section-title">Personal details</p>
+
+        <div class="field">
+          <label for="name">Full name *</label>
+          <input type="text" id="name" name="name" placeholder="Ahmed Al-Rashidi" required>
+          <span class="error-msg" id="err-name">Please enter your full name.</span>
+        </div>
+
+        <div class="field">
+          <label for="email">
+            Email address *
+            <span class="note"> — trade alerts will be sent here</span>
+          </label>
+          <input type="email" id="email" name="email" placeholder="ahmed@gmail.com" required>
+          <span class="error-msg" id="err-email">Please enter a valid email.</span>
+        </div>
+
+        <div class="field">
+          <label for="whatsapp">WhatsApp number *</label>
+          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+965 XXXX XXXX" required>
+          <p class="field-note">We will contact you on this number to complete setup.</p>
+          <span class="error-msg" id="err-whatsapp">Please enter your WhatsApp number.</span>
+        </div>
+      </div>
+
+      <!-- MT5 account details -->
+      <div class="card">
+        <p class="section-title">MT5 account details</p>
+
+        <div class="field">
+          <label for="broker">Broker *</label>
+          <select id="broker" name="broker" required>
+            <option value="">Select your broker</option>
+            <option value="NCM Investment Kuwait">NCM Investment Kuwait</option>
+            <option value="Caveo">Caveo</option>
+            <option value="CFI Financial">CFI Financial</option>
+            <option value="Other">Other</option>
+          </select>
+          <span class="error-msg" id="err-broker">Please select your broker.</span>
+        </div>
+
+        <div class="field">
+          <label for="mt5_login">
+            MT5 account number *
+            <span class="note"> — visible in your app</span>
+          </label>
+          <input type="text" id="mt5_login" name="mt5_login" placeholder="e.g. 1080644" required>
+          <span class="error-msg" id="err-mt5_login">Please enter your MT5 account number.</span>
+        </div>
+
+        <div class="field">
+          <label for="mt5_server">
+            MT5 server name
+            <span class="note"> — optional, leave blank if unsure</span>
+          </label>
+          <input type="text" id="mt5_server" name="mt5_server" placeholder="e.g. NCMInvestmentKW-Live">
+          <p class="field-note">Find this in your MT5 app under Settings → Server.</p>
+        </div>
+      </div>
+
+      <!-- Risk settings -->
+      <div class="card">
+        <p class="section-title">Risk settings</p>
+
+        <div class="two-col">
+          <div class="field">
+            <label for="account_size">Account size (USD) *</label>
+            <input type="number" id="account_size" name="account_size" placeholder="10000" min="100" required>
+            <span class="error-msg" id="err-account_size">Please enter your account size.</span>
+          </div>
+          <div class="field">
+            <label for="risk">Risk preference *</label>
+            <select id="risk" name="risk" required>
+              <option value="">Select risk level</option>
+              <option value="1">Conservative — 1% per trade</option>
+              <option value="2" selected>Moderate — 2% per trade</option>
+              <option value="3">Balanced — 3% per trade</option>
+              <option value="5">Aggressive — 5% per trade</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field" style="margin-top: 1rem">
+          <label for="notes">Notes or questions <span class="note"> — optional</span></label>
+          <input type="text" id="notes" name="notes" placeholder="Anything you'd like us to know">
+        </div>
+      </div>
+
+      <!-- Acknowledgement -->
+      <div class="card ack-card">
+        <p class="section-title">Acknowledgement</p>
+        <div class="ack-row">
+          <input type="checkbox" id="ack" name="ack" required>
+          <label for="ack" class="ack-text" style="font-weight:400">
+            I understand this is an automated trading bot that will trade XAUUSD (Gold) on my account.
+            I accept the risks involved in automated trading and confirm I am sharing my account
+            details voluntarily with full knowledge of what this service does.
+          </label>
+        </div>
+        <span class="error-msg" id="err-ack" style="margin-top: 8px">Please accept to continue.</span>
+      </div>
+
+      <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
+      <p class="submitting-msg" id="submitting-msg">Submitting... please wait.</p>
+
+    </form>
+  </div>
+
+  <!-- Success screen -->
+  <div class="success-screen" id="success-screen">
+    <div class="success-icon">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+        <path d="M5 13l4 4L19 7" stroke="#1a7a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <h2>You're all set</h2>
+    <p>
+      We've received your details. Our team will contact you on WhatsApp within 24 hours
+      to complete the setup securely. You don't need to do anything else.
+    </p>
+  </div>
+
+  <p class="footer-note">
+    GoldHawk — automated gold trading<br>
+    Your data is stored securely and never shared with third parties.
+  </p>
+
+</div>
+
+<script>
+  // ----------------------------------------------------------------
+  // REPLACE THIS with your Google Apps Script Web App URL
+  // (see onboarding_script.gs for setup instructions)
+  // ----------------------------------------------------------------
+  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDPwq5HrIK5OwhGOJSd5QglIDZ0d-aHonDZjOB4SKz_dYExp5S_mC_T4m3gqv9CKaYuQ/exec";
+
+  const form    = document.getElementById("onboarding-form");
+  const btn     = document.getElementById("submit-btn");
+  const spinner = document.getElementById("submitting-msg");
+
+  function showError(id, show) {
+    document.getElementById("err-" + id).style.display = show ? "block" : "none";
+  }
+
+  function validate() {
+    let valid = true;
+    const fields = ["name", "email", "whatsapp", "broker", "mt5_login", "account_size"];
+    fields.forEach(f => {
+      const el = document.getElementById(f);
+      const empty = !el.value.trim();
+      showError(f, empty);
+      if (empty) valid = false;
+    });
+    const email = document.getElementById("email").value;
+    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      showError("email", true);
+      valid = false;
+    }
+    const ack = document.getElementById("ack");
+    showError("ack", !ack.checked);
+    if (!ack.checked) valid = false;
+    return valid;
+  }
+
+  form.addEventListener("submit", async function(e) {
+    e.preventDefault();
+    if (!validate()) return;
+
+    btn.disabled = true;
+    btn.textContent = "Submitting...";
+    spinner.style.display = "block";
+
+    const data = {
+      name:         document.getElementById("name").value.trim(),
+      email:        document.getElementById("email").value.trim(),
+      whatsapp:     document.getElementById("whatsapp").value.trim(),
+      broker:       document.getElementById("broker").value,
+      mt5_login:    document.getElementById("mt5_login").value.trim(),
+      mt5_server:   document.getElementById("mt5_server").value.trim(),
+      account_size: document.getElementById("account_size").value.trim(),
+      risk:         document.getElementById("risk").value,
+      notes:        document.getElementById("notes").value.trim(),
+      submitted_at: new Date().toISOString(),
+    };
+
+    try {
+      await fetch(APPS_SCRIPT_URL, {
+        method:  "POST",
+        mode:    "no-cors",
+        headers: { "Content-Type": "application/json" },
+        body:    JSON.stringify(data),
+      });
+      document.getElementById("form-section").style.display = "none";
+      document.getElementById("success-screen").style.display = "block";
+      window.scrollTo(0, 0);
+    } catch (err) {
+      btn.disabled = false;
+      btn.textContent = "Submit";
+      spinner.style.display = "none";
+      alert("Something went wrong. Please try again or contact us directly on WhatsApp.");
+    }
+  });
+</script>
+</body>
+</html>
