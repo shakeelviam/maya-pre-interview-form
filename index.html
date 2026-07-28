@@ -1,472 +1,323 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>GoldHawk — Account Setup</title>
-  <style>
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Maya Tex — Candidate Registration</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#123128; --ink-2:#1b4a3c; --ink-soft:#3a5b4f;
+    --paper:#f3f6f2; --surface:#ffffff; --surface-2:#f7faf6;
+    --line:#e0e7dd; --line-2:#eef2ea;
+    --brass:#b0812f; --brass-2:#96691f; --brass-soft:#f5ecd8;
+    --text:#16211d; --muted:#5d6a63; --faint:#8a958e;
+    --ok:#2f7d5b; --ok-soft:#e4f1ea; --bad:#bd4630; --bad-soft:#f6e2dd;
+    --radius:16px; --radius-sm:11px; --shadow:0 1px 2px rgba(18,49,40,.05),0 12px 34px -18px rgba(18,49,40,.28);
+    --f-body:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--paper);color:var(--text);}
+  body{font-family:var(--f-body);line-height:1.5;-webkit-font-smoothing:antialiased;
+       padding:0 16px calc(40px + env(safe-area-inset-bottom));min-height:100vh;}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;}}
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-      background: #f5f5f0;
-      color: #1a1a1a;
-      min-height: 100vh;
-      padding: 2rem 1rem;
-    }
+  header{max-width:560px;margin:0 auto;display:flex;align-items:center;gap:11px;padding:18px 2px 14px;}
+  .mark{width:34px;height:34px;border-radius:9px;background:var(--ink);display:grid;place-items:center;flex:none;
+        box-shadow:0 6px 16px -8px rgba(18,49,40,.6);}
+  .mark span{width:13px;height:13px;background:var(--brass);transform:rotate(45deg);border-radius:2px;}
+  .brand b{font-weight:800;letter-spacing:.16em;font-size:15px;color:var(--ink);display:block;line-height:1;}
+  .brand small{color:var(--muted);font-size:10.5px;letter-spacing:.04em;text-transform:uppercase;}
 
-    .container {
-      max-width: 560px;
-      margin: 0 auto;
-    }
+  main{max-width:560px;margin:0 auto;}
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px 24px;}
 
-    .header {
-      margin-bottom: 2rem;
-    }
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);
+           display:flex;align-items:center;gap:8px;margin-bottom:9px;}
+  .eyebrow::before{content:"";width:16px;height:1.5px;background:var(--brass);display:inline-block;}
+  h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:6px;line-height:1.2;}
+  .lede{color:var(--muted);font-size:14px;margin-bottom:22px;}
 
-    .header h1 {
-      font-size: 26px;
-      font-weight: 600;
-      letter-spacing: -0.3px;
-      margin-bottom: 6px;
-    }
+  .field{margin-bottom:16px;}
+  .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:7px;}
+  .req{color:var(--bad);}
+  input,select{width:100%;font-family:inherit;font-size:16px;color:var(--text);background:var(--surface-2);
+        border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:14px 15px;transition:border-color .15s,background .15s;}
+  input::placeholder{color:var(--faint);}
+  input:focus,select:focus{outline:none;border-color:var(--ink-2);background:var(--surface);}
+  input:focus-visible,select:focus-visible{outline:2px solid var(--brass);outline-offset:1px;}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:420px){.row2{grid-template-columns:1fr;}}
+  .field.invalid input,.field.invalid select{border-color:var(--bad);}
+  .err{font-size:12px;color:var(--bad);margin-top:6px;display:none;}
+  .field.invalid .err{display:block;}
 
-    .header p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.6;
-    }
+  .chips{display:flex;flex-wrap:wrap;gap:8px;}
+  .chiptog{font-size:13.5px;font-weight:600;color:var(--ink-soft);background:var(--surface-2);
+           border:1.5px solid var(--line);border-radius:999px;padding:9px 15px;cursor:pointer;user-select:none;transition:all .12s;}
+  .chiptog.on{background:var(--ink);color:#fff;border-color:var(--ink);}
 
-    .warning-box {
-      background: #fffbeb;
-      border: 1px solid #f0c040;
-      border-radius: 10px;
-      padding: 12px 16px;
-      font-size: 13.5px;
-      color: #7a5c00;
-      margin-bottom: 1.5rem;
-      line-height: 1.5;
-    }
+  .drop{border:1.5px dashed var(--line);border-radius:var(--radius-sm);background:var(--surface-2);
+        padding:16px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s;}
+  .drop:hover{border-color:var(--brass);background:var(--brass-soft);}
+  .drop svg{color:var(--brass-2);margin-bottom:6px;}
+  .drop b{display:block;font-size:13.5px;color:var(--ink);font-weight:600;}
+  .drop span{font-size:12px;color:var(--muted);}
+  .drop.has{border-style:solid;border-color:var(--ok);background:var(--ok-soft);text-align:left;display:flex;align-items:center;gap:12px;}
+  .drop.has .thumb{width:44px;height:44px;border-radius:8px;object-fit:cover;flex:none;background:#fff;border:1px solid var(--line);}
+  .drop.has .fx{min-width:0;flex:1;}
+  .drop.has .fx b{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .drop.has .clear{background:none;border:0;color:var(--ink-soft);font-size:19px;cursor:pointer;padding:4px 8px;font-family:inherit;}
 
-    .warning-box strong {
-      display: block;
-      margin-bottom: 2px;
-    }
+  .banner{border-radius:var(--radius-sm);padding:13px 15px;font-size:13.5px;margin-bottom:16px;display:none;}
+  .banner.show{display:block;} .banner.bad{background:var(--bad-soft);color:var(--bad);}
 
-    .card {
-      background: #ffffff;
-      border: 1px solid #e5e5e0;
-      border-radius: 14px;
-      padding: 1.5rem;
-      margin-bottom: 1rem;
-    }
+  button.btn{width:100%;font-family:var(--f-body);font-size:15px;font-weight:700;border-radius:var(--radius-sm);
+             padding:16px;cursor:pointer;border:0;background:var(--ink);color:#fff;margin-top:8px;transition:transform .06s,background .15s;letter-spacing:.01em;}
+  button.btn:hover{background:var(--ink-2);} button.btn:active{transform:translateY(1px);}
+  button.btn[disabled]{opacity:.55;cursor:not-allowed;}
+  button.btn:focus-visible{outline:2px solid var(--brass);outline-offset:2px;}
+  .spin{width:16px;height:16px;border:2px solid rgba(255,255,255,.4);border-top-color:#fff;border-radius:50%;
+        display:inline-block;vertical-align:-3px;margin-right:8px;animation:sp .7s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
 
-    .section-title {
-      font-size: 11px;
-      font-weight: 600;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      color: #888;
-      margin-bottom: 1.25rem;
-    }
-
-    .field {
-      margin-bottom: 1.1rem;
-    }
-
-    .field:last-child {
-      margin-bottom: 0;
-    }
-
-    label {
-      display: block;
-      font-size: 13.5px;
-      font-weight: 500;
-      color: #333;
-      margin-bottom: 6px;
-    }
-
-    label .note {
-      font-weight: 400;
-      color: #999;
-      font-size: 12px;
-    }
-
-    input[type="text"],
-    input[type="email"],
-    input[type="tel"],
-    input[type="number"],
-    select,
-    textarea {
-      width: 100%;
-      padding: 10px 13px;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      font-size: 14px;
-      font-family: inherit;
-      color: #1a1a1a;
-      background: #fff;
-      outline: none;
-      transition: border-color 0.15s;
-      appearance: none;
-      -webkit-appearance: none;
-    }
-
-    input:focus, select:focus, textarea:focus {
-      border-color: #555;
-    }
-
-    input::placeholder, textarea::placeholder {
-      color: #bbb;
-    }
-
-    select {
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23999' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
-      background-repeat: no-repeat;
-      background-position: right 12px center;
-      padding-right: 36px;
-    }
-
-    .field-note {
-      font-size: 12px;
-      color: #999;
-      margin-top: 5px;
-      line-height: 1.4;
-    }
-
-    .two-col {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 12px;
-    }
-
-    .ack-card {
-      background: #fafaf8;
-    }
-
-    .ack-row {
-      display: flex;
-      gap: 12px;
-      align-items: flex-start;
-    }
-
-    .ack-row input[type="checkbox"] {
-      width: 17px;
-      height: 17px;
-      flex-shrink: 0;
-      margin-top: 2px;
-      accent-color: #1a1a1a;
-      cursor: pointer;
-    }
-
-    .ack-text {
-      font-size: 13.5px;
-      color: #555;
-      line-height: 1.6;
-    }
-
-    .submit-btn {
-      width: 100%;
-      padding: 13px;
-      background: #1a1a1a;
-      color: #fff;
-      border: none;
-      border-radius: 10px;
-      font-size: 15px;
-      font-weight: 500;
-      font-family: inherit;
-      cursor: pointer;
-      margin-top: 0.5rem;
-      transition: background 0.15s, transform 0.1s;
-    }
-
-    .submit-btn:hover { background: #333; }
-    .submit-btn:active { transform: scale(0.99); }
-    .submit-btn:disabled { background: #aaa; cursor: not-allowed; }
-
-    .footer-note {
-      text-align: center;
-      font-size: 12px;
-      color: #aaa;
-      margin-top: 1.5rem;
-      line-height: 1.6;
-    }
-
-    /* Success screen */
-    .success-screen {
-      display: none;
-      text-align: center;
-      padding: 3rem 1rem;
-    }
-
-    .success-icon {
-      width: 56px;
-      height: 56px;
-      background: #f0faf4;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin: 0 auto 1.5rem;
-    }
-
-    .success-screen h2 {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .success-screen p {
-      font-size: 15px;
-      color: #555;
-      line-height: 1.7;
-      max-width: 400px;
-      margin: 0 auto;
-    }
-
-    .error-msg {
-      color: #c0392b;
-      font-size: 13px;
-      margin-top: 5px;
-      display: none;
-    }
-
-    .submitting-msg {
-      text-align: center;
-      font-size: 14px;
-      color: #666;
-      margin-top: 10px;
-      display: none;
-    }
-
-    @media (max-width: 480px) {
-      .two-col { grid-template-columns: 1fr; }
-      body { padding: 1rem 0.75rem; }
-    }
-  </style>
+  .done{text-align:center;padding:24px 4px;}
+  .done .tick{width:64px;height:64px;border-radius:50%;background:var(--ok-soft);color:var(--ok);display:grid;place-items:center;margin:0 auto 18px;}
+  .done h1{color:var(--ink);}
+  .foot{text-align:center;color:var(--faint);font-size:11.5px;margin:18px auto 0;max-width:560px;line-height:1.6;}
+  .visually-hidden{position:absolute!important;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}
+  .sec{margin:22px 0 12px;padding-top:16px;border-top:1px solid var(--line-2);font-size:11px;font-weight:700;
+       letter-spacing:.14em;text-transform:uppercase;color:var(--brass-2);}
+</style>
 </head>
 <body>
 
-<div class="container">
+<header>
+  <div class="mark"><span></span></div>
+  <div class="brand"><b>MAYA TEX</b><small>Restaurants Co · Candidate Registration</small></div>
+</header>
 
-  <!-- Form -->
-  <div id="form-section">
-    <div class="header">
-      <h1>GoldHawk — account setup</h1>
-      <p>Fill in your details below. We will contact you privately to complete the setup securely.</p>
-    </div>
+<main>
+  <div class="card">
+    <section id="formCard">
+      <div class="eyebrow">Interview · walk-in</div>
+      <h1>Candidate registration</h1>
+      <p class="lede">Please fill this in while you wait. It takes about a minute.</p>
 
-    <div class="warning-box">
-      <strong>Do not enter your MT5 password here.</strong>
-      Our team will contact you privately via WhatsApp to collect it securely.
-    </div>
+      <div class="banner bad" id="err"></div>
 
-    <form id="onboarding-form" novalidate>
+      <div class="field" id="f_name">
+        <label>Full name <span class="req">*</span></label>
+        <input id="name" type="text" autocomplete="name" placeholder="Your full name" />
+        <div class="err">Please enter your name.</div>
+      </div>
 
-      <!-- Personal details -->
-      <div class="card">
-        <p class="section-title">Personal details</p>
+      <div class="field" id="f_mobile">
+        <label>Mobile / WhatsApp <span class="req">*</span></label>
+        <input id="mobile" type="tel" inputmode="tel" autocomplete="tel" placeholder="e.g. 5xxxxxxx" />
+        <div class="err">Please enter a contact number.</div>
+      </div>
 
+      <div class="row2">
         <div class="field">
-          <label for="name">Full name *</label>
-          <input type="text" id="name" name="name" placeholder="Ahmed Al-Rashidi" required>
-          <span class="error-msg" id="err-name">Please enter your full name.</span>
+          <label>Nationality</label>
+          <input id="nationality" list="nats" placeholder="e.g. Indian" />
+          <datalist id="nats">
+            <option>Indian</option><option>Nepali</option><option>Bangladeshi</option><option>Filipino</option>
+            <option>Sri Lankan</option><option>Pakistani</option><option>Egyptian</option><option>Syrian</option>
+            <option>Kuwaiti</option><option>Ethiopian</option>
+          </datalist>
         </div>
-
         <div class="field">
-          <label for="email">
-            Email address *
-            <span class="note"> — trade alerts will be sent here</span>
-          </label>
-          <input type="email" id="email" name="email" placeholder="ahmed@gmail.com" required>
-          <span class="error-msg" id="err-email">Please enter a valid email.</span>
-        </div>
-
-        <div class="field">
-          <label for="whatsapp">WhatsApp number *</label>
-          <input type="tel" id="whatsapp" name="whatsapp" placeholder="+965 XXXX XXXX" required>
-          <p class="field-note">We will contact you on this number to complete setup.</p>
-          <span class="error-msg" id="err-whatsapp">Please enter your WhatsApp number.</span>
+          <label>Position applied for</label>
+          <input id="position" list="roles" placeholder="e.g. Kitchen helper" />
+          <datalist id="roles">
+            <option>Kitchen helper</option><option>Cook</option><option>Commis</option><option>Waiter / Steward</option>
+            <option>Cashier</option><option>Barista</option><option>Cleaner</option><option>Driver</option>
+            <option>Supervisor</option>
+          </datalist>
         </div>
       </div>
 
-      <!-- MT5 account details -->
-      <div class="card">
-        <p class="section-title">MT5 account details</p>
+      <div class="field" id="f_visa">
+        <label>Visa status <span class="req">*</span></label>
+        <select id="visa">
+          <option value="" disabled selected>Select…</option>
+          <option>Article 18 – transferable</option>
+          <option>Article 18 – non-transferable</option>
+          <option>Article 22 (dependent)</option>
+          <option>Article 20 (domestic)</option>
+          <option>Visit visa</option>
+          <option>Not currently in Kuwait</option>
+        </select>
+        <div class="err">Please choose your visa status.</div>
+      </div>
 
+      <div class="row2">
         <div class="field">
-          <label for="broker">Broker *</label>
-          <select id="broker" name="broker" required>
-            <option value="">Select your broker</option>
-            <option value="NCM Investment Kuwait">NCM Investment Kuwait</option>
-            <option value="Caveo">Caveo</option>
-            <option value="CFI Financial">CFI Financial</option>
-            <option value="Other">Other</option>
+          <label>Years of experience</label>
+          <input id="experience" type="number" min="0" max="60" inputmode="numeric" placeholder="e.g. 3" />
+        </div>
+        <div class="field">
+          <label>Currently employed?</label>
+          <select id="employed">
+            <option value="" disabled selected>Select…</option>
+            <option>Yes</option><option>No</option>
           </select>
-          <span class="error-msg" id="err-broker">Please select your broker.</span>
         </div>
+      </div>
 
+      <div class="row2">
         <div class="field">
-          <label for="mt5_login">
-            MT5 account number *
-            <span class="note"> — visible in your app</span>
-          </label>
-          <input type="text" id="mt5_login" name="mt5_login" placeholder="e.g. 1080644" required>
-          <span class="error-msg" id="err-mt5_login">Please enter your MT5 account number.</span>
+          <label>Available to start</label>
+          <input id="availability" list="avail" placeholder="e.g. Immediately" />
+          <datalist id="avail"><option>Immediately</option><option>1 week</option><option>2 weeks</option><option>1 month</option></datalist>
         </div>
-
         <div class="field">
-          <label for="mt5_server">
-            MT5 server name
-            <span class="note"> — optional, leave blank if unsure</span>
-          </label>
-          <input type="text" id="mt5_server" name="mt5_server" placeholder="e.g. NCMInvestmentKW-Live">
-          <p class="field-note">Find this in your MT5 app under Settings → Server.</p>
+          <label>Expected salary (KD)</label>
+          <input id="salary" type="number" min="0" inputmode="numeric" placeholder="e.g. 250" />
         </div>
       </div>
 
-      <!-- Risk settings -->
-      <div class="card">
-        <p class="section-title">Risk settings</p>
+      <div class="field">
+        <label>Languages</label>
+        <div class="chips" id="langs">
+          <div class="chiptog" data-v="Arabic">Arabic</div>
+          <div class="chiptog" data-v="English">English</div>
+          <div class="chiptog" data-v="Hindi/Urdu">Hindi / Urdu</div>
+          <div class="chiptog" data-v="Nepali">Nepali</div>
+          <div class="chiptog" data-v="Tagalog">Tagalog</div>
+          <div class="chiptog" data-v="Other">Other</div>
+        </div>
+      </div>
 
-        <div class="two-col">
-          <div class="field">
-            <label for="account_size">Account size (USD) *</label>
-            <input type="number" id="account_size" name="account_size" placeholder="10000" min="100" required>
-            <span class="error-msg" id="err-account_size">Please enter your account size.</span>
+      <div class="sec">Attachments (optional)</div>
+      <div class="row2">
+        <div class="field">
+          <label>Photo</label>
+          <div class="drop" id="dropPhoto" role="button" tabindex="0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg>
+            <b>Add photo</b><span>A clear headshot</span>
           </div>
-          <div class="field">
-            <label for="risk">Risk preference *</label>
-            <select id="risk" name="risk" required>
-              <option value="">Select risk level</option>
-              <option value="1">Conservative — 1% per trade</option>
-              <option value="2" selected>Moderate — 2% per trade</option>
-              <option value="3">Balanced — 3% per trade</option>
-              <option value="5">Aggressive — 5% per trade</option>
-            </select>
+          <input id="filePhoto" type="file" accept="image/*" class="visually-hidden" />
+        </div>
+        <div class="field">
+          <label>CV</label>
+          <div class="drop" id="dropCv" role="button" tabindex="0">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg>
+            <b>Add CV</b><span>PDF, image, or Word</span>
           </div>
-        </div>
-
-        <div class="field" style="margin-top: 1rem">
-          <label for="notes">Notes or questions <span class="note"> — optional</span></label>
-          <input type="text" id="notes" name="notes" placeholder="Anything you'd like us to know">
+          <input id="fileCv" type="file" accept="image/*,application/pdf,.doc,.docx" class="visually-hidden" />
         </div>
       </div>
 
-      <!-- Acknowledgement -->
-      <div class="card ack-card">
-        <p class="section-title">Acknowledgement</p>
-        <div class="ack-row">
-          <input type="checkbox" id="ack" name="ack" required>
-          <label for="ack" class="ack-text" style="font-weight:400">
-            I understand this is an automated trading bot that will trade XAUUSD (Gold) on my account.
-            I accept the risks involved in automated trading and confirm I am sharing my account
-            details voluntarily with full knowledge of what this service does.
-          </label>
-        </div>
-        <span class="error-msg" id="err-ack" style="margin-top: 8px">Please accept to continue.</span>
+      <button class="btn" type="button" id="submit">Submit</button>
+      <input type="text" id="website" class="visually-hidden" tabindex="-1" autocomplete="off" aria-hidden="true" />
+    </section>
+
+    <section id="doneCard" style="display:none">
+      <div class="done">
+        <div class="tick"><svg width="30" height="30" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
+        <h1>Thank you</h1>
+        <p class="lede">Your details have been received. Our team will be with you shortly.</p>
+        <button class="btn" type="button" id="again" style="max-width:260px;margin:8px auto 0;">Register another candidate</button>
       </div>
-
-      <button type="submit" class="submit-btn" id="submit-btn">Submit</button>
-      <p class="submitting-msg" id="submitting-msg">Submitting... please wait.</p>
-
-    </form>
+    </section>
   </div>
-
-  <!-- Success screen -->
-  <div class="success-screen" id="success-screen">
-    <div class="success-icon">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
-        <path d="M5 13l4 4L19 7" stroke="#1a7a4a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-      </svg>
-    </div>
-    <h2>You're all set</h2>
-    <p>
-      We've received your details. Our team will contact you on WhatsApp within 24 hours
-      to complete the setup securely. You don't need to do anything else.
-    </p>
-  </div>
-
-  <p class="footer-note">
-    GoldHawk — automated gold trading<br>
-    Your data is stored securely and never shared with third parties.
-  </p>
-
-</div>
+  <p class="foot">Maya Tex Restaurants Company · Candidate registration</p>
+</main>
 
 <script>
-  // ----------------------------------------------------------------
-  // REPLACE THIS with your Google Apps Script Web App URL
-  // (see onboarding_script.gs for setup instructions)
-  // ----------------------------------------------------------------
-  const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbyDPwq5HrIK5OwhGOJSd5QglIDZ0d-aHonDZjOB4SKz_dYExp5S_mC_T4m3gqv9CKaYuQ/exec";
+/* 1) PASTE the /exec URL after deploying Code.gs   2) same secret as CONFIG.SHARED_SECRET */
+const API   = "PASTE_YOUR_APPS_SCRIPT_EXEC_URL";
+const TOKEN = "odma9WGOAjs5U4pzSVyzJm0KvPw0Uf7D6CTTKLgm";
 
-  const form    = document.getElementById("onboarding-form");
-  const btn     = document.getElementById("submit-btn");
-  const spinner = document.getElementById("submitting-msg");
+const $ = s => document.querySelector(s);
+const $$ = s => document.querySelectorAll(s);
+let photoData = null, cvData = null;
 
-  function showError(id, show) {
-    document.getElementById("err-" + id).style.display = show ? "block" : "none";
-  }
+/* language chips */
+$$("#langs .chiptog").forEach(c => c.onclick = () => c.classList.toggle("on"));
 
-  function validate() {
-    let valid = true;
-    const fields = ["name", "email", "whatsapp", "broker", "mt5_login", "account_size"];
-    fields.forEach(f => {
-      const el = document.getElementById(f);
-      const empty = !el.value.trim();
-      showError(f, empty);
-      if (empty) valid = false;
-    });
-    const email = document.getElementById("email").value;
-    if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      showError("email", true);
-      valid = false;
-    }
-    const ack = document.getElementById("ack");
-    showError("ack", !ack.checked);
-    if (!ack.checked) valid = false;
-    return valid;
-  }
+/* uploads */
+function readData(f){ return new Promise((res,rej)=>{ const r=new FileReader(); r.onload=()=>res(r.result); r.onerror=rej; r.readAsDataURL(f); }); }
+function compress(f){ return new Promise((res,rej)=>{ const r=new FileReader();
+  r.onload=()=>{ const img=new Image(); img.onload=()=>{ const max=1400; let w=img.width,h=img.height;
+    if(w>max||h>max){ const k=Math.min(max/w,max/h); w=Math.round(w*k); h=Math.round(h*k); }
+    const cv=document.createElement("canvas"); cv.width=w; cv.height=h; cv.getContext("2d").drawImage(img,0,0,w,h);
+    res(cv.toDataURL("image/jpeg",0.82)); }; img.onerror=rej; img.src=r.result; };
+  r.onerror=rej; r.readAsDataURL(f); }); }
+function esc(s){ return String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c])); }
 
-  form.addEventListener("submit", async function(e) {
-    e.preventDefault();
-    if (!validate()) return;
+function makeUpload(dropSel, inputSel, setState, emptyHTML){
+  const drop=$(dropSel), input=$(inputSel);
+  drop.onclick=()=>input.click();
+  drop.onkeydown=e=>{ if(e.key==="Enter"||e.key===" "){e.preventDefault();input.click();} };
+  input.onchange=async e=>{
+    const f=e.target.files[0]; if(!f) return;
+    if(f.size>10*1024*1024){ alert("That file is too large. Please use one under 10 MB."); e.target.value=""; return; }
+    try{
+      let dataUrl, mime=f.type, name=f.name;
+      if(f.type.startsWith("image/")){ dataUrl=await compress(f); mime="image/jpeg"; name=(f.name.replace(/\.\w+$/,"")||"file")+".jpg"; }
+      else{ dataUrl=await readData(f); }
+      const data={ name, mimeType:mime, data:dataUrl.split(",")[1] }; setState(data);
+      const thumb = mime.startsWith("image/") ? '<img class="thumb" src="'+dataUrl+'" alt="">'
+        : '<div class="thumb" style="display:grid;place-items:center;font-weight:700;color:var(--ink-soft)">'+(mime.indexOf("pdf")>-1?"PDF":"DOC")+'</div>';
+      drop.className="drop has";
+      drop.innerHTML=thumb+'<div class="fx"><b>'+esc(name)+'</b><span>'+Math.max(1,Math.round((data.data.length*3/4)/1024))+' KB · Attached</span></div><button type="button" class="clear" aria-label="Remove">×</button>';
+      drop.querySelector(".clear").onclick=ev=>{ ev.stopPropagation(); setState(null); drop.className="drop"; drop.innerHTML=emptyHTML; input.value=""; makeUpload(dropSel,inputSel,setState,emptyHTML); };
+    }catch(err){ alert("Couldn't read that file. Please try another."); }
+  };
+}
+const PHOTO_EMPTY='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/><circle cx="12" cy="13" r="3"/></svg><b>Add photo</b><span>A clear headshot</span>';
+const CV_EMPTY='<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/></svg><b>Add CV</b><span>PDF, image, or Word</span>';
+makeUpload("#dropPhoto","#filePhoto",d=>photoData=d,PHOTO_EMPTY);
+makeUpload("#dropCv","#fileCv",d=>cvData=d,CV_EMPTY);
 
-    btn.disabled = true;
-    btn.textContent = "Submitting...";
-    spinner.style.display = "block";
+/* validation + submit */
+function val(id){ return $("#"+id).value.trim(); }
+function bad(id,on){ $("#f_"+id).classList.toggle("invalid",on); }
+["name","mobile"].forEach(id=>$("#"+id).addEventListener("input",()=>bad(id,false)));
+$("#visa").addEventListener("change",()=>bad("visa",false));
 
-    const data = {
-      name:         document.getElementById("name").value.trim(),
-      email:        document.getElementById("email").value.trim(),
-      whatsapp:     document.getElementById("whatsapp").value.trim(),
-      broker:       document.getElementById("broker").value,
-      mt5_login:    document.getElementById("mt5_login").value.trim(),
-      mt5_server:   document.getElementById("mt5_server").value.trim(),
-      account_size: document.getElementById("account_size").value.trim(),
-      risk:         document.getElementById("risk").value,
-      notes:        document.getElementById("notes").value.trim(),
-      submitted_at: new Date().toISOString(),
-    };
+$("#submit").onclick=async()=>{
+  $("#err").classList.remove("show");
+  let ok=true;
+  if(!val("name")){ bad("name",true); ok=false; }
+  if(!val("mobile")){ bad("mobile",true); ok=false; }
+  if(!$("#visa").value){ bad("visa",true); ok=false; }
+  if(!ok){ window.scrollTo({top:0,behavior:"smooth"}); return; }
 
-    try {
-      await fetch(APPS_SCRIPT_URL, {
-        method:  "POST",
-        mode:    "no-cors",
-        headers: { "Content-Type": "application/json" },
-        body:    JSON.stringify(data),
-      });
-      document.getElementById("form-section").style.display = "none";
-      document.getElementById("success-screen").style.display = "block";
-      window.scrollTo(0, 0);
-    } catch (err) {
-      btn.disabled = false;
-      btn.textContent = "Submit";
-      spinner.style.display = "none";
-      alert("Something went wrong. Please try again or contact us directly on WhatsApp.");
-    }
-  });
+  const languages=[...$$("#langs .chiptog.on")].map(c=>c.getAttribute("data-v"));
+  const btn=$("#submit"); btn.disabled=true; btn.innerHTML='<span class="spin"></span>Sending…';
+  const payload={ token:TOKEN, website:val("website"),
+    name:val("name"), mobile:val("mobile"), nationality:val("nationality"), position:val("position"),
+    visa:$("#visa").value, experience:val("experience"), employed:$("#employed").value,
+    availability:val("availability"), salary:val("salary"), languages,
+    photo:photoData, cv:cvData };
+  try{
+    const res=await fetch(API,{ method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"}, body:JSON.stringify(payload) });
+    const data=await res.json();
+    if(!data.ok) throw new Error(data.error||"failed");
+    $("#formCard").style.display="none"; $("#doneCard").style.display="block"; window.scrollTo({top:0,behavior:"smooth"});
+  }catch(e){
+    $("#err").textContent=("Something went wrong. Please try again. "+(e.message||"")).trim();
+    $("#err").classList.add("show"); window.scrollTo({top:0,behavior:"smooth"});
+  }finally{ btn.disabled=false; btn.textContent="Submit"; }
+};
+
+$("#again").onclick=()=>{
+  ["name","mobile","nationality","position","experience","availability","salary","website"].forEach(id=>$("#"+id).value="");
+  $("#visa").value=""; $("#employed").value="";
+  $$("#langs .chiptog.on").forEach(c=>c.classList.remove("on"));
+  photoData=null; cvData=null;
+  $("#dropPhoto").className="drop"; $("#dropPhoto").innerHTML=PHOTO_EMPTY; makeUpload("#dropPhoto","#filePhoto",d=>photoData=d,PHOTO_EMPTY);
+  $("#dropCv").className="drop"; $("#dropCv").innerHTML=CV_EMPTY; makeUpload("#dropCv","#fileCv",d=>cvData=d,CV_EMPTY);
+  $("#doneCard").style.display="none"; $("#formCard").style.display="block";
+};
 </script>
 </body>
 </html>
