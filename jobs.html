@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<title>Careers — Join our team</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#123128; --ink-2:#1b4a3c; --ink-soft:#3a5b4f;
+    --paper:#f3f6f2; --surface:#ffffff; --surface-2:#f7faf6;
+    --line:#e0e7dd; --line-2:#eef2ea;
+    --brass:#b0812f; --brass-2:#96691f; --brass-soft:#f5ecd8;
+    --text:#16211d; --muted:#5d6a63; --faint:#8a958e;
+    --ok:#2f7d5b; --ok-soft:#e4f1ea;
+    --radius:16px; --radius-sm:11px; --shadow:0 1px 2px rgba(18,49,40,.05),0 12px 34px -18px rgba(18,49,40,.28);
+    --f-body:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--paper);color:var(--text);}
+  body{font-family:var(--f-body);line-height:1.5;-webkit-font-smoothing:antialiased;
+       padding:0 16px calc(48px + env(safe-area-inset-bottom));min-height:100vh;}
+
+  header{max-width:720px;margin:0 auto;padding:26px 2px 8px;}
+  .brandline{display:flex;align-items:center;gap:11px;margin-bottom:20px;}
+  .mark{width:34px;height:34px;border-radius:9px;background:var(--ink);display:grid;place-items:center;flex:none;
+        box-shadow:0 6px 16px -8px rgba(18,49,40,.6);}
+  .mark span{width:13px;height:13px;background:var(--brass);transform:rotate(45deg);border-radius:2px;}
+  .brandline b{font-weight:800;letter-spacing:.16em;font-size:14px;color:var(--ink);}
+  .eyebrow{font-size:11px;font-weight:700;letter-spacing:.18em;text-transform:uppercase;color:var(--brass-2);
+           display:flex;align-items:center;gap:8px;margin-bottom:10px;}
+  .eyebrow::before{content:"";width:16px;height:1.5px;background:var(--brass);display:inline-block;}
+  h1{font-size:27px;font-weight:800;letter-spacing:-.015em;color:var(--ink);margin-bottom:8px;line-height:1.15;}
+  .lede{color:var(--muted);font-size:15px;max-width:560px;}
+
+  main{max-width:720px;margin:0 auto;}
+  .controls{display:flex;gap:10px;margin:24px 0 6px;flex-wrap:wrap;}
+  .controls input,.controls select{font-family:inherit;font-size:15px;color:var(--text);background:var(--surface);
+    border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:12px 14px;}
+  .controls input{flex:1;min-width:180px;}
+  .controls input:focus,.controls select:focus{outline:none;border-color:var(--ink-2);}
+  .count{font-size:12.5px;color:var(--muted);margin:14px 2px 4px;}
+
+  .job{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);
+       padding:20px 20px;margin-top:14px;transition:border-color .15s;}
+  .job:hover{border-color:#cdd8cd;}
+  .job-top{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;}
+  .job h2{font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-.01em;}
+  .tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px;}
+  .tag{font-size:12px;font-weight:600;color:var(--ink-soft);background:var(--surface-2);
+       border:1px solid var(--line);border-radius:999px;padding:5px 11px;}
+  .tag.salary{background:var(--brass-soft);border-color:#eadbb6;color:var(--brass-2);}
+  .summary{color:var(--muted);font-size:14px;margin-top:12px;}
+  .reqs{font-size:14px;color:var(--ink-soft);margin-top:12px;padding-top:12px;border-top:1px solid var(--line-2);
+        display:none;white-space:pre-wrap;}
+  .reqs.show{display:block;}
+  .job-actions{display:flex;gap:10px;align-items:center;margin-top:16px;flex-wrap:wrap;}
+  .apply{font-family:inherit;font-size:14px;font-weight:700;border:0;background:var(--ink);color:#fff;
+         border-radius:var(--radius-sm);padding:11px 22px;cursor:pointer;text-decoration:none;display:inline-block;}
+  .apply:hover{background:var(--ink-2);}
+  .ghost{font-family:inherit;font-size:13.5px;font-weight:600;border:1.5px solid var(--line);background:var(--surface);
+         color:var(--ink-soft);border-radius:var(--radius-sm);padding:10px 16px;cursor:pointer;}
+  .ghost:hover{border-color:var(--brass);color:var(--ink);}
+  .share-note{font-size:12px;color:var(--ok);font-weight:600;display:none;}
+  .share-note.show{display:inline;}
+
+  .state{text-align:center;color:var(--muted);padding:50px 16px;font-size:14.5px;}
+  .foot{text-align:center;color:var(--faint);font-size:11.5px;margin:30px auto 0;max-width:720px;line-height:1.6;}
+  .spin{width:20px;height:20px;border:2.5px solid var(--line);border-top-color:var(--brass);border-radius:50%;
+        display:inline-block;animation:sp .7s linear infinite;}
+  @keyframes sp{to{transform:rotate(360deg);}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brandline"><div class="mark"><span></span></div><b>CAREERS</b></div>
+  <div class="eyebrow">Now hiring · Kuwait</div>
+  <h1>Join a fast-growing restaurant group</h1>
+  <p class="lede">We're building a team that takes pride in great food and warm service. Browse open roles below and apply in a minute — no account needed.</p>
+</header>
+
+<main>
+  <div class="controls">
+    <input id="search" type="text" placeholder="Search roles…" autocomplete="off" />
+    <select id="dept"><option value="">All departments</option></select>
+    <select id="loc"><option value="">All locations</option></select>
+  </div>
+  <div class="count" id="count"></div>
+  <div id="list"><div class="state"><span class="spin"></span></div></div>
+</main>
+
+<p class="foot">Equal-opportunity employer · Kuwait</p>
+
+<script>
+/* Same Apps Script Web App URL as the registration form. */
+const API  = "https://script.google.com/macros/s/AKfycbxBd68nPwigbWq_qsf43KCusBbhMsjUvZL9AMdtZJ_9XAWFyTS2HuijfM8OqB2rPkse/exec";
+/* Where the registration form lives — Apply deep-links here with the job pre-filled. */
+const FORM = "https://shakeelviam.github.io/maya-pre-interview-form/";
+
+const $  = s => document.querySelector(s);
+const esc = s => String(s||"").replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let JOBS = [];
+
+function field(j, name){ // tolerant header lookup
+  for (const k in j){ if (k.toLowerCase().trim() === name) return j[k]; }
+  for (const k in j){ if (k.toLowerCase().includes(name)) return j[k]; }
+  return "";
+}
+
+async function load(){
+  try{
+    const res = await fetch(API + "?type=jobs");
+    const data = await res.json();
+    JOBS = (data.jobs || []).map(j => ({
+      id: String(field(j,"job id")||"").trim(),
+      title: String(field(j,"title")||"").trim(),
+      dept: String(field(j,"department")||"").trim(),
+      loc: String(field(j,"location")||"").trim(),
+      type: String(field(j,"type")||"").trim(),
+      salary: String(field(j,"salary")||"").trim(),
+      summary: String(field(j,"summary")||"").trim(),
+      reqs: String(field(j,"requirements")||"").trim()
+    })).filter(j => j.title);
+    fillFilters();
+    render();
+  }catch(e){
+    $("#list").innerHTML = '<div class="state">Couldn\'t load openings right now. Please try again shortly.</div>';
+  }
+}
+
+function fillFilters(){
+  const depts=[...new Set(JOBS.map(j=>j.dept).filter(Boolean))].sort();
+  const locs =[...new Set(JOBS.map(j=>j.loc).filter(Boolean))].sort();
+  depts.forEach(d=>{const o=document.createElement("option");o.value=d;o.textContent=d;$("#dept").appendChild(o);});
+  locs.forEach(l=>{const o=document.createElement("option");o.value=l;o.textContent=l;$("#loc").appendChild(o);});
+}
+
+function render(){
+  const q=$("#search").value.toLowerCase().trim(), d=$("#dept").value, l=$("#loc").value;
+  const shown=JOBS.filter(j=>{
+    const hay=(j.title+" "+j.dept+" "+j.loc+" "+j.summary).toLowerCase();
+    return (!q||hay.includes(q)) && (!d||j.dept===d) && (!l||j.loc===l);
+  });
+  $("#count").textContent = shown.length + (shown.length===1?" open role":" open roles");
+  if(!shown.length){ $("#list").innerHTML='<div class="state">No roles match your search right now.</div>'; return; }
+  $("#list").innerHTML = shown.map(j=>{
+    const applyUrl = FORM + "?job=" + encodeURIComponent(j.id) + "&position=" + encodeURIComponent(j.title);
+    const shareUrl = location.origin + location.pathname + "?job=" + encodeURIComponent(j.id);
+    return `<div class="job" id="job_${esc(j.id)}">
+      <div class="job-top"><h2>${esc(j.title)}</h2></div>
+      <div class="tags">
+        ${j.dept?`<span class="tag">${esc(j.dept)}</span>`:""}
+        ${j.loc?`<span class="tag">${esc(j.loc)}</span>`:""}
+        ${j.type?`<span class="tag">${esc(j.type)}</span>`:""}
+        ${j.salary?`<span class="tag salary">${esc(j.salary)}</span>`:""}
+      </div>
+      ${j.summary?`<div class="summary">${esc(j.summary)}</div>`:""}
+      ${j.reqs?`<div class="reqs" id="reqs_${esc(j.id)}">${esc(j.reqs)}</div>`:""}
+      <div class="job-actions">
+        <a class="apply" href="${applyUrl}">Apply now</a>
+        ${j.reqs?`<button class="ghost" data-req="${esc(j.id)}">View details</button>`:""}
+        <button class="ghost" data-share="${esc(shareUrl)}">Share</button>
+        <span class="share-note" id="sn_${esc(j.id)}">Link copied ✓</span>
+      </div>
+    </div>`;
+  }).join("");
+
+  document.querySelectorAll("[data-req]").forEach(b=>b.onclick=()=>{
+    const box=$("#reqs_"+CSS.escape(b.dataset.req)); box.classList.toggle("show");
+    b.textContent=box.classList.contains("show")?"Hide details":"View details";
+  });
+  document.querySelectorAll("[data-share]").forEach(b=>b.onclick=()=>{
+    navigator.clipboard.writeText(b.dataset.share).then(()=>{
+      const id=b.closest(".job").id.replace("job_","");
+      const n=$("#sn_"+CSS.escape(id)); if(n){n.classList.add("show");setTimeout(()=>n.classList.remove("show"),1800);}
+    });
+  });
+
+  // If arrived via a per-job share link, scroll to that job.
+  const target=new URLSearchParams(location.search).get("job");
+  if(target){ const el=$("#job_"+CSS.escape(target)); if(el){el.scrollIntoView({behavior:"smooth",block:"center"});el.style.borderColor="var(--brass)";} }
+}
+
+$("#search").oninput=render; $("#dept").onchange=render; $("#loc").onchange=render;
+load();
+</script>
+</body>
+</html>
