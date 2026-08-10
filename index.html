@@ -40,6 +40,9 @@
   .eyebrow::before{content:"";width:16px;height:1.5px;background:var(--brass);display:inline-block;}
   h1{font-size:22px;font-weight:700;letter-spacing:-.01em;color:var(--ink);margin-bottom:6px;line-height:1.2;}
   .lede{color:var(--muted);font-size:14px;margin-bottom:22px;}
+  .jobtag{display:none;background:var(--brass-soft);border:1px solid #eadbb6;border-radius:var(--radius-sm);
+          padding:11px 13px;font-size:13px;color:var(--brass-2);margin-bottom:20px;}
+  .jobtag.show{display:block;} .jobtag b{font-weight:700;}
 
   .field{margin-bottom:16px;}
   .field label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin-bottom:7px;}
@@ -54,6 +57,7 @@
   .field.invalid input,.field.invalid select{border-color:var(--bad);}
   .err{font-size:12px;color:var(--bad);margin-top:6px;display:none;}
   .field.invalid .err{display:block;}
+  .hint{font-size:11.5px;color:var(--faint);margin-top:6px;}
 
   .chips{display:flex;flex-wrap:wrap;gap:8px;}
   .chiptog{font-size:13.5px;font-weight:600;color:var(--ink-soft);background:var(--surface-2);
@@ -107,6 +111,7 @@
       <h1>Candidate registration</h1>
       <p class="lede">Please fill this in while you wait. It takes about a minute.</p>
 
+      <div class="jobtag" id="jobtag"></div>
       <div class="banner bad" id="err"></div>
 
       <div class="field" id="f_name">
@@ -124,21 +129,62 @@
       <div class="row2">
         <div class="field">
           <label>Nationality</label>
-          <input id="nationality" list="nats" placeholder="e.g. Indian" />
+          <input id="nationality" list="nats" placeholder="Start typing…" autocomplete="off" />
           <datalist id="nats">
-            <option>Indian</option><option>Nepali</option><option>Bangladeshi</option><option>Filipino</option>
-            <option>Sri Lankan</option><option>Pakistani</option><option>Egyptian</option><option>Syrian</option>
-            <option>Kuwaiti</option><option>Ethiopian</option>
+            <option>Afghan</option><option>Albanian</option><option>Algerian</option><option>American</option>
+            <option>Andorran</option><option>Angolan</option><option>Antiguan</option><option>Argentine</option>
+            <option>Armenian</option><option>Australian</option><option>Austrian</option><option>Azerbaijani</option>
+            <option>Bahamian</option><option>Bahraini</option><option>Bangladeshi</option><option>Barbadian</option>
+            <option>Belarusian</option><option>Belgian</option><option>Belizean</option><option>Beninese</option>
+            <option>Bhutanese</option><option>Bolivian</option><option>Bosnian</option><option>Botswanan</option>
+            <option>Brazilian</option><option>British</option><option>Bruneian</option><option>Bulgarian</option>
+            <option>Burkinabé</option><option>Burmese</option><option>Burundian</option><option>Cambodian</option>
+            <option>Cameroonian</option><option>Canadian</option><option>Cape Verdean</option><option>Central African</option>
+            <option>Chadian</option><option>Chilean</option><option>Chinese</option><option>Colombian</option>
+            <option>Comoran</option><option>Congolese</option><option>Costa Rican</option><option>Croatian</option>
+            <option>Cuban</option><option>Cypriot</option><option>Czech</option><option>Danish</option>
+            <option>Djiboutian</option><option>Dominican</option><option>Dutch</option><option>East Timorese</option>
+            <option>Ecuadorian</option><option>Egyptian</option><option>Emirati</option><option>Equatorial Guinean</option>
+            <option>Eritrean</option><option>Estonian</option><option>Ethiopian</option><option>Fijian</option>
+            <option>Filipino</option><option>Finnish</option><option>French</option><option>Gabonese</option>
+            <option>Gambian</option><option>Georgian</option><option>German</option><option>Ghanaian</option>
+            <option>Greek</option><option>Grenadian</option><option>Guatemalan</option><option>Guinean</option>
+            <option>Guinea-Bissauan</option><option>Guyanese</option><option>Haitian</option><option>Honduran</option>
+            <option>Hungarian</option><option>Icelandic</option><option>Indian</option><option>Indonesian</option>
+            <option>Iranian</option><option>Iraqi</option><option>Irish</option><option>Israeli</option>
+            <option>Italian</option><option>Ivorian</option><option>Jamaican</option><option>Japanese</option>
+            <option>Jordanian</option><option>Kazakh</option><option>Kenyan</option><option>Kiribati</option>
+            <option>Kosovar</option><option>Kuwaiti</option><option>Kyrgyz</option><option>Lao</option>
+            <option>Latvian</option><option>Lebanese</option><option>Basotho</option><option>Liberian</option>
+            <option>Libyan</option><option>Liechtensteiner</option><option>Lithuanian</option><option>Luxembourgish</option>
+            <option>Malagasy</option><option>Malawian</option><option>Malaysian</option><option>Maldivian</option>
+            <option>Malian</option><option>Maltese</option><option>Marshallese</option><option>Mauritanian</option>
+            <option>Mauritian</option><option>Mexican</option><option>Micronesian</option><option>Moldovan</option>
+            <option>Monégasque</option><option>Mongolian</option><option>Montenegrin</option><option>Moroccan</option>
+            <option>Mozambican</option><option>Namibian</option><option>Nauruan</option><option>Nepali</option>
+            <option>New Zealander</option><option>Nicaraguan</option><option>Nigerien</option><option>Nigerian</option>
+            <option>North Korean</option><option>North Macedonian</option><option>Norwegian</option><option>Omani</option>
+            <option>Pakistani</option><option>Palauan</option><option>Palestinian</option><option>Panamanian</option>
+            <option>Papua New Guinean</option><option>Paraguayan</option><option>Peruvian</option><option>Polish</option>
+            <option>Portuguese</option><option>Qatari</option><option>Romanian</option><option>Russian</option>
+            <option>Rwandan</option><option>Saint Lucian</option><option>Salvadoran</option><option>Samoan</option>
+            <option>San Marinese</option><option>São Toméan</option><option>Saudi</option><option>Senegalese</option>
+            <option>Serbian</option><option>Seychellois</option><option>Sierra Leonean</option><option>Singaporean</option>
+            <option>Slovak</option><option>Slovenian</option><option>Solomon Islander</option><option>Somali</option>
+            <option>South African</option><option>South Korean</option><option>South Sudanese</option><option>Spanish</option>
+            <option>Sri Lankan</option><option>Sudanese</option><option>Surinamese</option><option>Swazi</option>
+            <option>Swedish</option><option>Swiss</option><option>Syrian</option><option>Taiwanese</option>
+            <option>Tajik</option><option>Tanzanian</option><option>Thai</option><option>Togolese</option>
+            <option>Tongan</option><option>Trinidadian</option><option>Tunisian</option><option>Turkish</option>
+            <option>Turkmen</option><option>Tuvaluan</option><option>Ugandan</option><option>Ukrainian</option>
+            <option>Uruguayan</option><option>Uzbek</option><option>Vanuatuan</option><option>Venezuelan</option>
+            <option>Vietnamese</option><option>Yemeni</option><option>Zambian</option><option>Zimbabwean</option>
           </datalist>
         </div>
         <div class="field">
           <label>Position applied for</label>
-          <input id="position" list="roles" placeholder="e.g. Kitchen helper" />
-          <datalist id="roles">
-            <option>Kitchen helper</option><option>Cook</option><option>Commis</option><option>Waiter / Steward</option>
-            <option>Cashier</option><option>Barista</option><option>Cleaner</option><option>Driver</option>
-            <option>Supervisor</option>
-          </datalist>
+          <input id="position" type="text" placeholder="Type the position…" autocomplete="off" />
+          <div class="hint">Type any position — e.g. Kitchen helper, Cook, Cashier, Driver.</div>
         </div>
       </div>
 
@@ -239,6 +285,16 @@ const $ = s => document.querySelector(s);
 const $$ = s => document.querySelectorAll(s);
 let photoData = null, cvData = null;
 
+/* Deep-link from the careers board: prefill position, remember Job ID, show a banner */
+const _p = new URLSearchParams(location.search);
+const JOB_ID = _p.get("job") || "";
+if (_p.get("position")){
+  $("#position").value = _p.get("position");
+  const t = $("#jobtag");
+  t.innerHTML = "You're applying for: <b>" + _p.get("position").replace(/[<>&]/g,"") + "</b>";
+  t.classList.add("show");
+}
+
 /* language chips */
 $$("#langs .chiptog").forEach(c => c.onclick = () => c.classList.toggle("on"));
 
@@ -293,7 +349,7 @@ $("#submit").onclick=async()=>{
 
   const languages=[...$$("#langs .chiptog.on")].map(c=>c.getAttribute("data-v"));
   const btn=$("#submit"); btn.disabled=true; btn.innerHTML='<span class="spin"></span>Sending…';
-  const payload={ token:TOKEN, website:val("website"),
+  const payload={ token:TOKEN, website:val("website"), jobId:JOB_ID,
     name:val("name"), mobile:val("mobile"), nationality:val("nationality"), position:val("position"),
     visa:$("#visa").value, experience:val("experience"), employed:$("#employed").value,
     availability:val("availability"), salary:val("salary"), languages,
