@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="robots" content="noindex,nofollow" />
+<title>Maya Tex — Manage Job Posts</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#123128; --ink-2:#1b4a3c; --ink-soft:#3a5b4f;
+    --paper:#f3f6f2; --surface:#ffffff; --surface-2:#f7faf6;
+    --line:#e0e7dd; --line-2:#eef2ea;
+    --brass:#b0812f; --brass-2:#96691f; --brass-soft:#f5ecd8;
+    --text:#16211d; --muted:#5d6a63; --faint:#8a958e;
+    --ok:#2f7d5b; --ok-soft:#e4f1ea; --bad:#bd4630; --bad-soft:#f6e2dd;
+    --radius:16px; --radius-sm:11px; --shadow:0 1px 2px rgba(18,49,40,.05),0 12px 34px -18px rgba(18,49,40,.28);
+    --f-body:'Plus Jakarta Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html,body{background:var(--paper);color:var(--text);}
+  body{font-family:var(--f-body);line-height:1.5;-webkit-font-smoothing:antialiased;padding:0 16px 60px;min-height:100vh;}
+  header{max-width:760px;margin:0 auto;text-align:center;padding:26px 2px 6px;}
+  .mark{width:38px;height:38px;border-radius:10px;background:var(--ink);display:inline-grid;place-items:center;margin-bottom:10px;
+        box-shadow:0 6px 16px -8px rgba(18,49,40,.6);}
+  .mark span{width:15px;height:15px;background:var(--brass);transform:rotate(45deg);border-radius:2px;}
+  h1{font-size:24px;font-weight:800;color:var(--ink);letter-spacing:-.01em;}
+  .sub{color:var(--muted);font-size:14px;margin-top:4px;}
+  main{max-width:760px;margin:0 auto;}
+
+  .card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow);padding:22px 20px;margin-top:20px;}
+  .card h2{font-size:17px;font-weight:700;color:var(--brass-2);margin-bottom:16px;}
+  label{display:block;font-size:12.5px;font-weight:600;color:var(--ink-soft);margin:0 0 6px;}
+  input,select,textarea{width:100%;font-family:inherit;font-size:15px;color:var(--text);background:var(--surface-2);
+    border:1.5px solid var(--line);border-radius:var(--radius-sm);padding:11px 13px;transition:border-color .15s,background .15s;}
+  textarea{min-height:76px;resize:vertical;}
+  input:focus,select:focus,textarea:focus{outline:none;border-color:var(--ink-2);background:var(--surface);}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  @media(max-width:520px){.row{grid-template-columns:1fr;}}
+  .field{margin-bottom:14px;}
+  .hint{font-size:11.5px;color:var(--faint);margin-top:5px;}
+
+  .btn{font-family:inherit;font-size:14.5px;font-weight:700;border:0;border-radius:var(--radius-sm);padding:13px 22px;cursor:pointer;background:var(--ink);color:#fff;}
+  .btn:hover{background:var(--ink-2);} .btn[disabled]{opacity:.55;cursor:not-allowed;}
+  .btn-ghost{background:var(--surface);border:1.5px solid var(--line);color:var(--ink-soft);font-weight:600;}
+  .btn-ghost:hover{border-color:var(--brass);color:var(--ink);}
+  .actions{display:flex;gap:10px;align-items:center;margin-top:6px;flex-wrap:wrap;}
+  .note{font-size:13px;font-weight:600;} .note.ok{color:var(--ok);} .note.bad{color:var(--bad);}
+
+  .gate{max-width:420px;margin:22px auto 0;text-align:center;}
+  .gate input{text-align:center;margin:12px 0;}
+
+  .jrow{border:1px solid var(--line);border-radius:12px;padding:14px 16px;margin-top:10px;background:var(--surface);}
+  .jrow.closed{opacity:.62;}
+  .jtop{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;}
+  .jtitle{font-weight:700;font-size:15.5px;color:var(--ink);}
+  .jmeta{font-size:12.5px;color:var(--muted);margin-top:3px;}
+  .badge{font-size:11px;font-weight:700;border-radius:999px;padding:3px 10px;white-space:nowrap;}
+  .badge.open{background:var(--ok-soft);color:var(--ok);}
+  .badge.closed{background:var(--bad-soft);color:var(--bad);}
+  .jact{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap;}
+  .mini{font-family:inherit;font-size:12.5px;font-weight:600;border:1.5px solid var(--line);background:var(--surface);
+        color:var(--ink-soft);border-radius:8px;padding:7px 13px;cursor:pointer;}
+  .mini:hover{border-color:var(--brass);color:var(--ink);}
+  .mini.del:hover{border-color:var(--bad);color:var(--bad);}
+  .state{text-align:center;color:var(--muted);padding:26px;font-size:14px;}
+  .foot{text-align:center;color:var(--faint);font-size:11.5px;margin:26px auto 0;}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="mark"><span></span></div>
+  <h1>Manage job posts</h1>
+  <div class="sub">Add, edit, open/close or remove roles — no spreadsheet needed.</div>
+</header>
+
+<main>
+  <div class="card gate" id="gate">
+    <h2 style="text-align:center">Admin access</h2>
+    <p class="hint">Enter your admin key to manage postings.</p>
+    <input id="keyInput" type="password" placeholder="Admin key" autocomplete="off" />
+    <button class="btn" id="unlock" style="width:100%">Unlock</button>
+    <div class="note bad" id="gateErr" style="margin-top:10px;display:none">Wrong key — try again.</div>
+  </div>
+
+  <div id="app" style="display:none">
+    <div class="card">
+      <h2 id="formTitle">New job post</h2>
+      <input type="hidden" id="jobId" />
+      <div class="field"><label>Job title *</label><input id="title" type="text" placeholder="e.g. Cashier" /></div>
+      <div class="row">
+        <div class="field"><label>Department</label><input id="department" type="text" placeholder="e.g. Front of house" /></div>
+        <div class="field"><label>Location</label><input id="location" type="text" placeholder="e.g. Kuwait City" /></div>
+      </div>
+      <div class="row">
+        <div class="field">
+          <label>Type</label>
+          <select id="type"><option value="">Select…</option><option>Full-time</option><option>Part-time</option><option>Contract</option><option>Temporary</option></select>
+        </div>
+        <div class="field"><label>Salary range</label><input id="salary" type="text" placeholder="e.g. 180–220 KD" /></div>
+      </div>
+      <div class="field"><label>Summary</label><textarea id="summary" placeholder="One or two lines describing the role."></textarea></div>
+      <div class="field"><label>Requirements</label><textarea id="requirements" placeholder="Key requirements — one per line is fine."></textarea></div>
+      <div class="row">
+        <div class="field"><label>Status</label><select id="status"><option>Open</option><option>Closed</option></select></div>
+        <div class="field"><label>Expiry date <span class="hint" style="font-weight:400">(optional — auto-hides after)</span></label><input id="expiry" type="date" /></div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="save">Save post</button>
+        <button class="btn btn-ghost" id="clear">Clear / new</button>
+        <span class="note" id="note"></span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Current posts</h2>
+      <div id="list"><div class="state">Loading…</div></div>
+    </div>
+  </div>
+</main>
+
+<p class="foot">Maya Tex Restaurants Company · Admin</p>
+
+<script>
+/* Maya Web App /exec URL (same as the form and careers board). */
+const API = "https://script.google.com/macros/s/AKfycbxBd68nPwigbWq_qsf43KCusBbhMsjUvZL9AMdtZJ_9XAWFyTS2HuijfM8OqB2rPkse/exec";
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s==null?"":s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+let KEY = localStorage.getItem("maya_admin_key") || "";
+let JOBS = [];
+
+function showApp(){ $("#gate").style.display="none"; $("#app").style.display="block"; loadJobs(); }
+if (KEY) showApp();
+$("#unlock").onclick = async () => {
+  const k = $("#keyInput").value.trim(); if(!k) return;
+  try{
+    const r = await fetch(API + "?type=alljobs&key=" + encodeURIComponent(k));
+    const d = await r.json();
+    if (d.ok){ KEY=k; localStorage.setItem("maya_admin_key",k); JOBS=d.jobs||[]; showApp(); renderList(); }
+    else { $("#gateErr").style.display="block"; }
+  }catch(e){ $("#gateErr").style.display="block"; }
+};
+
+function jf(j,name){ for(const k in j){ if(k.toLowerCase().trim()===name) return j[k]; } return ""; }
+async function loadJobs(){
+  try{
+    const r = await fetch(API + "?type=alljobs&key=" + encodeURIComponent(KEY));
+    const d = await r.json();
+    if(!d.ok){ localStorage.removeItem("maya_admin_key"); location.reload(); return; }
+    JOBS = d.jobs || []; renderList();
+  }catch(e){ $("#list").innerHTML='<div class="state">Couldn\'t load posts. Check your connection.</div>'; }
+}
+function fmtDate(v){ if(!v) return ""; const d=new Date(v); return isNaN(d)?String(v):d.toISOString().slice(0,10); }
+function renderList(){
+  if(!JOBS.length){ $("#list").innerHTML='<div class="state">No posts yet. Create your first one above.</div>'; return; }
+  $("#list").innerHTML = JOBS.map(j=>{
+    const id=jf(j,"job id"), title=jf(j,"title");
+    const status=String(jf(j,"status")||"Open"); const open=status.toLowerCase()==="open";
+    const exp=fmtDate(jf(j,"expiry date"));
+    const meta=[jf(j,"department"),jf(j,"location"),jf(j,"salary range")].filter(Boolean).join(" · ");
+    return `<div class="jrow ${open?'':'closed'}">
+      <div class="jtop">
+        <div><div class="jtitle">${esc(title)} <span style="color:var(--faint);font-weight:500;font-size:12px">${esc(id)}</span></div>
+          <div class="jmeta">${esc(meta||'—')}${exp?' · expires '+esc(exp):''}</div></div>
+        <div><span class="badge ${open?'open':'closed'}">${esc(status)}</span></div>
+      </div>
+      <div class="jact">
+        <button class="mini" data-edit="${esc(id)}">Edit</button>
+        <button class="mini" data-toggle="${esc(id)}">${open?'Close':'Reopen'}</button>
+        <button class="mini del" data-del="${esc(id)}">Delete</button>
+      </div>
+    </div>`;
+  }).join("");
+  document.querySelectorAll("[data-edit]").forEach(b=>b.onclick=()=>edit(b.dataset.edit));
+  document.querySelectorAll("[data-toggle]").forEach(b=>b.onclick=()=>toggle(b.dataset.toggle));
+  document.querySelectorAll("[data-del]").forEach(b=>b.onclick=()=>del(b.dataset.del));
+}
+
+function jobById(id){ return JOBS.find(j=>String(jf(j,"job id")).trim()===String(id).trim()); }
+function edit(id){
+  const j=jobById(id); if(!j) return;
+  $("#formTitle").textContent="Edit post "+id;
+  $("#jobId").value=id;
+  $("#title").value=jf(j,"title"); $("#department").value=jf(j,"department"); $("#location").value=jf(j,"location");
+  $("#type").value=jf(j,"type")||""; $("#salary").value=jf(j,"salary range");
+  $("#summary").value=jf(j,"summary"); $("#requirements").value=jf(j,"requirements");
+  $("#status").value=String(jf(j,"status")||"Open"); $("#expiry").value=fmtDate(jf(j,"expiry date"));
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+function clearForm(){
+  $("#formTitle").textContent="New job post"; $("#jobId").value="";
+  ["title","department","location","salary","summary","requirements","expiry"].forEach(i=>$("#"+i).value="");
+  $("#type").value=""; $("#status").value="Open";
+}
+$("#clear").onclick=clearForm;
+
+async function post(body){
+  const r = await fetch(API,{ method:"POST", headers:{"Content-Type":"text/plain;charset=utf-8"},
+    body: JSON.stringify(Object.assign({ admin:KEY }, body)) });
+  return r.json();
+}
+
+$("#save").onclick=async()=>{
+  const title=$("#title").value.trim(); const note=$("#note");
+  if(!title){ note.className="note bad"; note.textContent="Title is required."; return; }
+  const btn=$("#save"); btn.disabled=true; note.className="note"; note.textContent="Saving…";
+  const job={
+    "Job ID":$("#jobId").value.trim(), "Title":title, "Department":$("#department").value.trim(),
+    "Location":$("#location").value.trim(), "Type":$("#type").value, "Salary range":$("#salary").value.trim(),
+    "Summary":$("#summary").value.trim(), "Requirements":$("#requirements").value.trim(),
+    "Status":$("#status").value, "Expiry date":$("#expiry").value
+  };
+  try{
+    const d=await post({ action:"saveJob", job });
+    if(d.ok){ note.className="note ok"; note.textContent="Saved ("+d.jobId+") ✓"; clearForm(); await loadJobs(); }
+    else { note.className="note bad"; note.textContent=d.error||"Save failed."; }
+  }catch(e){ note.className="note bad"; note.textContent="Save failed — check connection."; }
+  finally{ btn.disabled=false; }
+};
+
+async function toggle(id){
+  const j=jobById(id); if(!j) return;
+  const open=String(jf(j,"status")||"Open").toLowerCase()==="open";
+  const job={ "Job ID":id, "Title":jf(j,"title"), "Department":jf(j,"department"), "Location":jf(j,"location"),
+    "Type":jf(j,"type"), "Salary range":jf(j,"salary range"), "Summary":jf(j,"summary"),
+    "Requirements":jf(j,"requirements"), "Status":open?"Closed":"Open", "Expiry date":fmtDate(jf(j,"expiry date")) };
+  await post({ action:"saveJob", job }); await loadJobs();
+}
+async function del(id){
+  if(!confirm("Delete "+id+"? This can't be undone.")) return;
+  await post({ action:"deleteJob", jobId:id }); await loadJobs();
+}
+</script>
+</body>
+</html>
